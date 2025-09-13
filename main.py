@@ -1,7 +1,13 @@
+import sys
 import string
+from stats import get_num_words
 
 def main():
-    book_report("books/frankenstein.txt")
+    if len(sys.argv) < 2:
+        print(f"Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    else:
+        book_report(sys.argv[1])
 
 def get_book_content(filepath):
     with open(filepath) as f:
@@ -30,7 +36,7 @@ def count_characters(input_str: str):
 def book_report(filepath):
     book = get_book_content(filepath)
 
-    word_count = count_words(book)
+    word_count = get_num_words(book)
     character_count = count_characters(book)
     characters = []
     values = []
@@ -44,7 +50,7 @@ def book_report(filepath):
 
     while len(values) > 0:
         i = values.index(max(values))
-        print(f"The '{characters[i]}' character was found '{values[i]}' times")
+        print(f"{characters[i]}: {values[i]}")
         characters.remove(characters[i])
         values.remove(values[i])
 
